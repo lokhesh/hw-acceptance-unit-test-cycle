@@ -5,6 +5,7 @@ Given /the following movies exist/ do |movies_table|
   end
 end
 
+
 Then /I should see "(.*)" before "(.*)"/ do |e1, e2|
   #  ensure that that e1 occurs before e2.
   #  page.body is the entire content of the page as a string.
@@ -15,6 +16,11 @@ When /I (un)?check the following ratings: (.*)/ do |uncheck, rating_list|
   rating_list.split(', ').each do |rating|
     step %{I #{uncheck.nil? ? '' : 'un'}check "ratings_#{rating}"}
   end
+end
+
+Then(/^the director of "([^"]*)" should be "([^"]*)"$/) do |arg1, arg2|
+  expect(page).to have_content(arg1)
+  expect(page.body).to match(/Director:\s#{arg2}/)
 end
 
 Then /I should see all the movies/ do
